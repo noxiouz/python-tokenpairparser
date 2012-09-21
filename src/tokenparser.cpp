@@ -8,13 +8,13 @@
 
 #include <Python.h>
 #include <tokenparser.hpp>
-#include <iostream>
+//#include <iostream>
 
 using namespace boost::spirit;
 
-std::map<std::string, std::string> DICT;
 
-PyObject* token_parser_t::construct(PyTypeObject * type, PyObject * args, PyObject * kwargs) {
+PyObject*
+token_parser_t::construct(PyTypeObject * type, PyObject * args, PyObject * kwargs) {
 	token_parser_t * self = reinterpret_cast<token_parser_t*>(type->tp_alloc(type, 0));
 	self->parser_rule = eps_p;
 	return reinterpret_cast<PyObject*>(self);
@@ -24,7 +24,8 @@ void token_parser_t::destruct(PyTypeObject * type, PyObject * args, PyObject * k
 	;
 }
 
-PyObject * token_parser_t::skip(token_parser_t * self, PyObject * args){
+PyObject*
+token_parser_t::skip(token_parser_t * self, PyObject * args){
 	char c;
 	if (!PyArg_ParseTuple(args, "c", &c)){
 		return NULL;
@@ -33,33 +34,41 @@ PyObject * token_parser_t::skip(token_parser_t * self, PyObject * args){
 	return Py_BuildValue("i",0);
 }
 
-PyObject * token_parser_t::upTo(token_parser_t * self, PyObject * args){
+PyObject*
+token_parser_t::upTo(token_parser_t * self, PyObject * args){
 	char c;
 	const char * key;
 	if (!PyArg_ParseTuple(args, "sc",&key, &c)){
 		return NULL;
 	}
-	//std::cout<<key<<std::endl;
-	std::string str(key);
-
-	self->parser_rule = self->parser_rule.copy()>>(*~ch_p(c)>>ch_p(c))[insert_at_a(DICT, key)];
+	self->_vtr_field.push_back(key);
+	self->parser_rule = self->parser_rule.copy()>>(*~ch_p(c)>>ch_p(c))[push_back_a(self->_vtr_value)];
 	return Py_BuildValue("i",1);
 }
 
-PyObject * token_parser_t::Parse(token_parser_t * self, PyObject * args){
+PyObject*
+token_parser_t::Parse(token_parser_t * self, PyObject * args){
 	const char * input_string = NULL;
 	if (!PyArg_ParseTuple(args, "s", &input_string)){
 		return NULL;
 	}
 	bool result;
 	result = parse(input_string, self->parser_rule, space_p).full;
-	std::map<std::string, std::string>::iterator it;
-	for(it = DICT.begin(); it != DICT.end(); it++){
-	std::cout << "Key: " << (*it).first << " Value: " << (*it).second <<std::endl;
-	}
 	return Py_BuildValue("i", result);
 }
 
+PyObject*
+token_parser_t::matches(token_parser_t* self, PyObject *args){
+	PyObject * dict = PyDict_New();
+	for (int i=0; i<self->_vtr_value.size(); ++i){
+		PyDict_SetItem(dict,
+						Py_BuildValue("s",self->_vtr_field[i]),
+								Py_BuildValue("s", self->_vtr_value[i].c_str())
+					);
+	}
+	//Py_INCREF(dict);
+	return dict;
+}
 
 
 //==================================================================================
@@ -67,8 +76,9 @@ PyObject * token_parser_t::Parse(token_parser_t * self, PyObject * args){
 static PyMethodDef token_parse_methods[] = {
 	{"skip", (PyCFunction)token_parser_t::skip, METH_VARARGS, "Test"},
 	{"upTo", (PyCFunction)token_parser_t::upTo, METH_VARARGS, "upTo"},
-	{"Parse",(PyCFunction)token_parser_t::Parse, METH_VARARGS, "Parsing"},
-    { NULL, NULL, 0, NULL }
+	{"Parse",(PyCFunction)token_parser_t::Parse, METH_VARARGS, "Parse"},
+	{"matches", (PyCFunction)token_parser_t::matches, METH_VARARGS, "matches"},
+    	{ NULL, NULL, 0, NULL }
 };
 
 PyTypeObject token_parser_type = {
