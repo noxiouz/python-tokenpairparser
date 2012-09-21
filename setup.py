@@ -4,7 +4,7 @@ except ImportError:
     from distutils.core import setup, Extension
 
 setup(
-    name = "TokenParser",
+    name = "TokenPairParser",
     version = "0.1",
     author = "noxiouz",
     author_email = "noxiouz@yandex.ru",

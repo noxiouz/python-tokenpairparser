@@ -1,14 +1,24 @@
 /*
- * tokenparser.cpp
+ * Copyright (c) 2012 Anton Tyurin <noxiouz@yandex.ru>
  *
- *  Created on: Sep 16, 2012
- *      Author: noxiouz
+ * This file is part of TokenPairParser.
+ *
+ * TokenPairParser is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * TokenPairParser is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 
 #include <Python.h>
 #include <tokenparser.hpp>
-//#include <iostream>
 
 using namespace boost::spirit;
 
@@ -31,7 +41,17 @@ token_parser_t::skip(token_parser_t * self, PyObject * args){
 		return NULL;
 	}
 	self->parser_rule = self->parser_rule.copy()>>ch_p(c);
-	return Py_BuildValue("i",0);
+	Py_RETURN_NONE;
+}
+
+PyObject*
+token_parser_t::skipTo(token_parser_t* self, PyObject* args){
+	char c;
+	if (!PyArg_ParseTuple(args, "c", &c)){
+		return NULL;
+	}
+	self->parser_rule = self->parser_rule.copy()>>*~ch_p(c);
+	Py_RETURN_NONE;
 }
 
 PyObject*
@@ -42,8 +62,22 @@ token_parser_t::upTo(token_parser_t * self, PyObject * args){
 		return NULL;
 	}
 	self->_vtr_field.push_back(key);
-	self->parser_rule = self->parser_rule.copy()>>(*~ch_p(c)>>ch_p(c))[push_back_a(self->_vtr_value)];
-	return Py_BuildValue("i",1);
+	self->parser_rule = self->parser_rule.copy()>>
+			(*~ch_p(c))[push_back_a(self->_vtr_value)];
+	Py_RETURN_NONE;
+}
+
+PyObject*
+token_parser_t::fromTo(token_parser_t* self, PyObject* args){
+	char _from, _to;
+	const char * key;
+	if (!PyArg_ParseTuple(args, "scc",&key, &_from, &_to)){
+		return NULL;
+	}
+	self->_vtr_field.push_back(key);
+	self->parser_rule = self->parser_rule.copy()>>
+			(ch_p(_from)>>*~ch_p(_to)>>ch_p(_to))[push_back_a(self->_vtr_value)];
+	Py_RETURN_NONE;
 }
 
 PyObject*
@@ -52,9 +86,12 @@ token_parser_t::Parse(token_parser_t * self, PyObject * args){
 	if (!PyArg_ParseTuple(args, "s", &input_string)){
 		return NULL;
 	}
-	bool result;
-	result = parse(input_string, self->parser_rule, space_p).full;
-	return Py_BuildValue("i", result);
+	if (parse( input_string, self->parser_rule, space_p).full ){
+		Py_RETURN_TRUE;
+	}
+	else {
+		Py_RETURN_FALSE;
+	}
 }
 
 PyObject*
@@ -63,22 +100,23 @@ token_parser_t::matches(token_parser_t* self, PyObject *args){
 	for (int i=0; i<self->_vtr_value.size(); ++i){
 		PyDict_SetItem(dict,
 						Py_BuildValue("s",self->_vtr_field[i]),
-								Py_BuildValue("s", self->_vtr_value[i].c_str())
+						Py_BuildValue("s", self->_vtr_value[i].c_str())
 					);
 	}
 	//Py_INCREF(dict);
 	return dict;
 }
 
-
 //==================================================================================
 
 static PyMethodDef token_parse_methods[] = {
-	{"skip", (PyCFunction)token_parser_t::skip, METH_VARARGS, "Test"},
-	{"upTo", (PyCFunction)token_parser_t::upTo, METH_VARARGS, "upTo"},
-	{"Parse",(PyCFunction)token_parser_t::Parse, METH_VARARGS, "Parse"},
+	{"skip",	(PyCFunction)token_parser_t::skip, METH_VARARGS, "skip"},
+	{"skipTo",	(PyCFunction)token_parser_t::skipTo, METH_VARARGS, "skipTo"},
+	{"fromTo",	(PyCFunction)token_parser_t::fromTo, METH_VARARGS, "fromTo"},
+	{"upTo",	(PyCFunction)token_parser_t::upTo, METH_VARARGS, "upTo"},
+	{"Parse",	(PyCFunction)token_parser_t::Parse, METH_VARARGS, "Parse"},
 	{"matches", (PyCFunction)token_parser_t::matches, METH_VARARGS, "matches"},
-    	{ NULL, NULL, 0, NULL }
+    { NULL, NULL, 0, NULL }
 };
 
 PyTypeObject token_parser_type = {
