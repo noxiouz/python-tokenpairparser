@@ -1,0 +1,7 @@
+setup.py
+src/module.cpp
+src/tokenparser.cpp
+tokenparser.egg-info/PKG-INFO
+tokenparser.egg-info/SOURCES.txt
+tokenparser.egg-info/dependency_links.txt
+tokenparser.egg-info/top_level.txt

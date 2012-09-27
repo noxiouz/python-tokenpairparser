@@ -1,0 +1,11 @@
+Package: python-tokenparser
+Version: 0.1
+Architecture: all
+Maintainer: Anton Tyurin <noxiouz@yandex-team.ru>
+Installed-Size: 140
+Depends: libc6 (>= 2.2.5), libgcc1 (>= 1:4.1.1), libstdc++6 (>= 4.1.1)
+Section: misc
+Priority: extra
+Homepage: test
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>

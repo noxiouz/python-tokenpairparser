@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: tokenparser
+Version: 0.1
+Summary: Some description
+Home-page: https://github.com/noxiouz/python-Tokenpair-parser-on-C-API
+Author: noxiouz
+Author-email: noxiouz@yandex.ru
+License: GPL2
+Description: Long description
+Platform: UNKNOWN
