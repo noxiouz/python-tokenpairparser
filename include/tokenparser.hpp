@@ -42,6 +42,7 @@ class token_parser_t {
 		static PyObject* upTo(token_parser_t* self, PyObject* args);
 		static PyObject* Parse(token_parser_t* self, PyObject* args);
 		static PyObject* matches(token_parser_t* self, PyObject* args);
+		static PyObject* clearMatches(token_parser_t* self, PyObject* args);
 	private:
 		stored_rule<> parser_rule;
 		std::vector<std::string> _vtr_value;

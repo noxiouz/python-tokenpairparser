@@ -107,6 +107,14 @@ token_parser_t::matches(token_parser_t* self, PyObject *args){
 	return dict;
 }
 
+
+PyObject* 
+token_parser_t::clearMatches(token_parser_t* self, PyObject* args){
+	self->_vtr_value.clear();
+	self->_vtr_field.clear();
+	Py_RETURN_NONE;
+}
+
 //==================================================================================
 
 static PyMethodDef token_parse_methods[] = {
@@ -116,6 +124,7 @@ static PyMethodDef token_parse_methods[] = {
 	{"upTo",	(PyCFunction)token_parser_t::upTo, METH_VARARGS, "upTo"},
 	{"Parse",	(PyCFunction)token_parser_t::Parse, METH_VARARGS, "Parse"},
 	{"matches", (PyCFunction)token_parser_t::matches, METH_VARARGS, "matches"},
+	{"clearMatches", (PyCFunction)token_parser_t::clearMatches, METH_VARARGS, "clearmatches"},
     { NULL, NULL, 0, NULL }
 };
 
