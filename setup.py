@@ -12,7 +12,6 @@ setup(
     long_description="Fast string parsing baesd on boost::sprit",
     url="https://github.com/noxiouz/python-Tokenpair-parser-on-C-API",
     author_email = "noxiouz@yandex.ru",
-    #py_module=["Tokenparser.py"],
     packages=["Tokenparser"],
     ext_modules = [Extension("_tokenparser",
                              ["src/tokenparser.cpp","src/module.cpp"],
