@@ -118,13 +118,13 @@ token_parser_t::clearMatches(token_parser_t* self, PyObject* args){
 //==================================================================================
 
 static PyMethodDef token_parse_methods[] = {
-	{"skip",	(PyCFunction)token_parser_t::skip, METH_VARARGS, "skip"},
+	{"skip",	(PyCFunction)token_parser_t::skip, METH_VARARGS, "skip symbol"},
 	{"skipTo",	(PyCFunction)token_parser_t::skipTo, METH_VARARGS, "skipTo"},
 	{"fromTo",	(PyCFunction)token_parser_t::fromTo, METH_VARARGS, "fromTo"},
 	{"upTo",	(PyCFunction)token_parser_t::upTo, METH_VARARGS, "upTo"},
-	{"Parse",	(PyCFunction)token_parser_t::Parse, METH_VARARGS, "Parse"},
-	{"matches", (PyCFunction)token_parser_t::matches, METH_VARARGS, "matches"},
-	{"clearMatches", (PyCFunction)token_parser_t::clearMatches, METH_VARARGS, "clearmatches"},
+	{"parse",	(PyCFunction)token_parser_t::Parse, METH_VARARGS, "Parse"},
+	{"matches", (PyCFunction)token_parser_t::matches, METH_NOARGS, "matches"},
+	{"clearMatches", (PyCFunction)token_parser_t::clearMatches, METH_NOARGS, "clearmatches"},
     { NULL, NULL, 0, NULL }
 };
 
@@ -150,7 +150,7 @@ PyTypeObject token_parser_type = {
     0, /* tp_setattro */
     0, /* tp_as_buffer */
     Py_TPFLAGS_DEFAULT | Py_TPFLAGS_BASETYPE, /* tp_flags */
-    "TokenParser", /* tp_doc */
+    "Tokenparser", /* tp_doc */
     0, /* tp_traverse */
     0, /* tp_clear */
     0, /* tp_richcompare */

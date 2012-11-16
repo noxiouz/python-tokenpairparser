@@ -24,7 +24,7 @@ extern "C" {
         PyObject * module = Py_InitModule3(
             "_tokenparser",
             NULL,
-            "TokenParser"
+            "Tokenparser"
         );
 
         if(PyType_Ready(&token_parser_type) < 0) {
@@ -35,7 +35,7 @@ extern "C" {
 
         PyModule_AddObject(
             module,
-            "TokenParser",
+            "Tokenparser",
             reinterpret_cast<PyObject*>(&token_parser_type)
         );
     }
