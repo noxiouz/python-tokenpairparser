@@ -95,7 +95,7 @@ token_parser_t::Parse(token_parser_t * self, PyObject * args){
 }
 
 PyObject*
-token_parser_t::matches(token_parser_t* self, PyObject *args){
+token_parser_t::matches(token_parser_t* self){
 	PyObject * dict = PyDict_New();
 	for (int i=0; i<self->_vtr_value.size(); ++i){
 		PyDict_SetItem(dict,
@@ -109,7 +109,7 @@ token_parser_t::matches(token_parser_t* self, PyObject *args){
 
 
 PyObject* 
-token_parser_t::clearMatches(token_parser_t* self, PyObject* args){
+token_parser_t::clearMatches(token_parser_t* self){
 	self->_vtr_value.clear();
 	self->_vtr_field.clear();
 	Py_RETURN_NONE;

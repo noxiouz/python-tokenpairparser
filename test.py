@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import Tokenparser
 
 p = Tokenparser.Tokenparser()
