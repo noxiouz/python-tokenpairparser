@@ -1,3 +1,9 @@
+python-tokenparser (0.1-1) lucid; urgency=low
+
+  * Prepare for packet build
+
+ -- Anton Tyurin <noxiouz@yandex-team.ru>  Sun, 16 Dec 2012 23:01:52 +0400
+
 python-tokenparser (0.1) lucid; urgency=low
 
   * Initial Release.
