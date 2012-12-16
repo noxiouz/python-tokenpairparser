@@ -30,8 +30,8 @@ token_parser_t::construct(PyTypeObject * type, PyObject * args, PyObject * kwarg
 	return reinterpret_cast<PyObject*>(self);
 }
 
-void token_parser_t::destruct(PyTypeObject * type, PyObject * args, PyObject * kwargs) {
-	;
+void token_parser_t::destruct(token_parser_t* self) {
+	self->ob_type->tp_free(self);
 }
 
 PyObject*

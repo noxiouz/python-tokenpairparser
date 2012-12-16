@@ -35,7 +35,7 @@ class token_parser_t {
 		PyObject_HEAD
 
 		static PyObject* construct(PyTypeObject * type, PyObject * args, PyObject * kwargs);
-		static void destruct(PyTypeObject * type, PyObject* args, PyObject * kwargs);
+		static void destruct(token_parser_t* type);
 		static PyObject* skip(token_parser_t* self, PyObject* args);
 		static PyObject* skipTo(token_parser_t* self, PyObject* args);
 		static PyObject* fromTo(token_parser_t* self, PyObject* args);
