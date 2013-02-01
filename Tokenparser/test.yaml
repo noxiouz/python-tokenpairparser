@@ -1,0 +1,6 @@
+PARSER OBJECT:
+    upTo:   [FIELD,A]
+    skip:   [A]
+    fromTo: [FIELD2, C, D]
+
+
