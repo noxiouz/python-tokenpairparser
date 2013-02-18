@@ -19,6 +19,8 @@
 
 #include <Python.h>
 #include <tokenparser.hpp>
+#include <gil.hpp>
+
 
 using namespace boost::spirit;
 
@@ -97,7 +99,7 @@ token_parser_t::Parse(token_parser_t * self, PyObject * args){
 PyObject*
 token_parser_t::matches(token_parser_t* self){
 	PyObject * dict = PyDict_New();
-	for (int i=0; i<self->_vtr_value.size(); ++i){
+	for (size_t i=0; i < self->_vtr_value.size(); ++i){
 		PyDict_SetItem(dict,
 						Py_BuildValue("s",self->_vtr_field[i]),
 						Py_BuildValue("s", self->_vtr_value[i].c_str())
@@ -115,23 +117,51 @@ token_parser_t::clearMatches(token_parser_t* self){
 	Py_RETURN_NONE;
 }
 
+
+PyObject* 
+token_parser_t::MultilineParse(token_parser_t *self, PyObject *args){
+    PyObject* input_lines;
+    if (!PyArg_ParseTuple(args, "O", &input_lines)){
+        return NULL;
+    }
+    if (!PySequence_Check(input_lines)){
+        return NULL;
+    }
+
+    allow_threads_t ALLOW_THREADS;
+
+    Py_ssize_t length = PySequence_Size(input_lines);
+    PyObject *list = PyList_New(0);
+
+    for (Py_ssize_t i=0; i < length; ++i){
+        const char* tm = NULL; 
+        tm = PyString_AS_STRING(PySequence_Fast_GET_ITEM(input_lines, i));
+	    if (parse(tm, self->parser_rule, space_p).full) {
+            PyList_Append(list, matches(self));
+        }
+        clearMatches(self);
+    }
+    return list;
+}
+
 //==================================================================================
 
 static PyMethodDef token_parse_methods[] = {
 	{"skip",	(PyCFunction)token_parser_t::skip, METH_VARARGS, "skip symbol"},
-	{"skipTo",	(PyCFunction)token_parser_t::skipTo, METH_VARARGS, "skipTo"},
+	{"skipTo",	(PyCFunction)token_parser_t::skipTo, METH_VARARGS, "skipTo - skip all characters"},
 	{"fromTo",	(PyCFunction)token_parser_t::fromTo, METH_VARARGS, "fromTo"},
-	{"upTo",	(PyCFunction)token_parser_t::upTo, METH_VARARGS, "upTo"},
-	{"parse",	(PyCFunction)token_parser_t::Parse, METH_VARARGS, "Parse"},
-	{"matches", (PyCFunction)token_parser_t::matches, METH_NOARGS, "matches"},
-	{"clearMatches", (PyCFunction)token_parser_t::clearMatches, METH_NOARGS, "clearmatches"},
+	{"upTo",	(PyCFunction)token_parser_t::upTo, METH_VARARGS, "upTo - match all character until"},
+	{"parse",	(PyCFunction)token_parser_t::Parse, METH_VARARGS, "Parse input string by tuned methods"},
+	{"multilinesParse",	(PyCFunction)token_parser_t::MultilineParse, METH_VARARGS, "Parse multilines like tuple or list of strings"},
+	{"matches", (PyCFunction)token_parser_t::matches, METH_NOARGS, "Return resukt as dict"},
+	{"clearMatches", (PyCFunction)token_parser_t::clearMatches, METH_NOARGS, "Clear result"},
     { NULL, NULL, 0, NULL }
 };
 
 PyTypeObject token_parser_type = {
     PyObject_HEAD_INIT(&PyType_Type)
     0, /* ob_size */
-    "Parser", /* tp_name */
+    "Tokenparser", /* tp_name */
     sizeof(token_parser_t), /* tp_basicsize */
     0, /* tp_itemsize */
     (destructor)token_parser_t::destruct, /* tp_dealloc */

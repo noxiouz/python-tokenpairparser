@@ -22,10 +22,15 @@
 #define PARSER_HPP_
 
 #include <Python.h>
+
 #include <boost/spirit/core.hpp>
 #include <boost/spirit/dynamic/stored_rule.hpp>
 #include <boost/spirit/actor/push_back_actor.hpp>
-
+/*
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_stored_rule.hpp>
+#include <boost/spirit/include/classic_push_back_actor.hpp>
+*/
 extern PyTypeObject token_parser_type;
 
 using namespace boost::spirit;
@@ -41,6 +46,7 @@ class token_parser_t {
 		static PyObject* fromTo(token_parser_t* self, PyObject* args);
 		static PyObject* upTo(token_parser_t* self, PyObject* args);
 		static PyObject* Parse(token_parser_t* self, PyObject* args);
+		static PyObject* MultilineParse(token_parser_t* self, PyObject* args);
 		static PyObject* matches(token_parser_t* self);
 		static PyObject* clearMatches(token_parser_t* self);
 	private:
