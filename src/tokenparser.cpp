@@ -128,7 +128,6 @@ token_parser_t::MultilineParse(token_parser_t *self, PyObject *args){
         return NULL;
     }
 
-    allow_threads_t ALLOW_THREADS;
 
     Py_ssize_t length = PySequence_Size(input_lines);
     PyObject *list = PyList_New(0);
