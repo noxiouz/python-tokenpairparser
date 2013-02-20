@@ -20,6 +20,8 @@
 #include <Python.h>
 #include <tokenparser.hpp>
 #include <gil.hpp>
+#include <iostream>
+#include <helpers.hpp>
 
 
 using namespace boost::spirit;
@@ -124,22 +126,28 @@ token_parser_t::MultilineParse(token_parser_t *self, PyObject *args){
     if (!PyArg_ParseTuple(args, "O", &input_lines)){
         return NULL;
     }
-    if (!PySequence_Check(input_lines)){
+    smart_pyobject_t iterator(PyObject_GetIter(input_lines));
+    if (iterator == NULL){
+        std::cout<<"No iter"<<std::endl;
         return NULL;
     }
 
-
-    Py_ssize_t length = PySequence_Size(input_lines);
     PyObject *list = PyList_New(0);
-
-    for (Py_ssize_t i=0; i < length; ++i){
+    PyObject* item;
+    while (item = PyIter_Next(iterator.get())){
         const char* tm = NULL; 
-        tm = PyString_AS_STRING(PySequence_Fast_GET_ITEM(input_lines, i));
+        tm = PyString_AS_STRING(item);
 	    if (parse(tm, self->parser_rule, space_p).full) {
             PyList_Append(list, matches(self));
         }
         clearMatches(self);
+        Py_XDECREF(item);
     }
+    if (PyErr_Occurred()) {
+            Py_XDECREF(list);
+            return NULL;
+        }
+    //Py_DECREF(iterator);
     return list;
 }
 
