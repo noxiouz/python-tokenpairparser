@@ -20,7 +20,6 @@
 #include <Python.h>
 #include <tokenparser.hpp>
 #include <gil.hpp>
-#include <iostream>
 #include <helpers.hpp>
 
 
@@ -102,12 +101,13 @@ PyObject*
 token_parser_t::matches(token_parser_t* self){
 	PyObject * dict = PyDict_New();
 	for (size_t i=0; i < self->_vtr_value.size(); ++i){
-		PyDict_SetItem(dict,
-						Py_BuildValue("s",self->_vtr_field[i]),
-						Py_BuildValue("s", self->_vtr_value[i].c_str())
+        PyObject* value = Py_BuildValue("s", self->_vtr_value[i].c_str());
+		PyDict_SetItemString(dict,
+						self->_vtr_field[i],
+						value
 					);
+        Py_DECREF(value);
 	}
-	//Py_INCREF(dict);
 	return dict;
 }
 
@@ -126,28 +126,29 @@ token_parser_t::MultilineParse(token_parser_t *self, PyObject *args){
     if (!PyArg_ParseTuple(args, "O", &input_lines)){
         return NULL;
     }
-    smart_pyobject_t iterator(PyObject_GetIter(input_lines));
+    PyObject* iterator = PyObject_GetIter(input_lines);
     if (iterator == NULL){
-        std::cout<<"No iter"<<std::endl;
         return NULL;
     }
 
     PyObject *list = PyList_New(0);
     PyObject* item;
-    while (item = PyIter_Next(iterator.get())){
+    while (item = PyIter_Next(iterator)){
         const char* tm = NULL; 
         tm = PyString_AS_STRING(item);
 	    if (parse(tm, self->parser_rule, space_p).full) {
-            PyList_Append(list, matches(self));
+            PyObject* value = matches(self);
+            PyList_Append(list, value);
+            Py_DECREF(value);
         }
         clearMatches(self);
-        Py_XDECREF(item);
+        Py_DECREF(item);
     }
     if (PyErr_Occurred()) {
-            Py_XDECREF(list);
+            Py_DECREF(list);
             return NULL;
         }
-    //Py_DECREF(iterator);
+    Py_DECREF(iterator);
     return list;
 }
 
