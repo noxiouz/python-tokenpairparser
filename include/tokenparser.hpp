@@ -23,9 +23,9 @@
 
 #include <Python.h>
 
-#include <boost/spirit/core.hpp>
-#include <boost/spirit/dynamic/stored_rule.hpp>
-#include <boost/spirit/actor/push_back_actor.hpp>
+#include <boost/spirit/include/classic_core.hpp>
+#include <boost/spirit/include/classic_stored_rule.hpp>
+#include <boost/spirit/include/classic_push_back_actor.hpp>
 /*
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_stored_rule.hpp>
@@ -33,7 +33,7 @@
 */
 extern PyTypeObject token_parser_type;
 
-using namespace boost::spirit;
+using namespace boost::spirit::classic;
 
 class token_parser_t {
 	public:

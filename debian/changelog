@@ -1,3 +1,9 @@
+python-tokenparser (0.1-5) lucid; urgency=low
+
+  * Fix properly include of boost::spirit::classic headers.
+
+ -- Anton Tyurin <noxiouz@yandex-team.ru>  Thu, 14 Mar 2013 12:13:53 +0400
+
 python-tokenparser (0.1-4) lucid; urgency=low
 
   * FIX BUG:  Memory leak

@@ -133,7 +133,7 @@ token_parser_t::MultilineParse(token_parser_t *self, PyObject *args){
 
     PyObject *list = PyList_New(0);
     PyObject* item;
-    while (item = PyIter_Next(iterator)){
+    while (item = PyIter_Next(iterator)){ // http://docs.python.org/2/c-api/iter.html?highlight=pyiter_next#PyIter_Next
         const char* tm = NULL; 
         tm = PyString_AS_STRING(item);
 	    if (parse(tm, self->parser_rule, space_p).full) {
