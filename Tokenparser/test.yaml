@@ -1,6 +1,11 @@
-PARSER OBJECT:
-    upTo:   [FIELD,A]
-    skip:   [A]
-    fromTo: [FIELD2, C, D]
+- TIME: "[2013:12:57:45 +0400"
+- HOST: avatars.yandex.net
+- IP: ::ffff:178.23.6.225
+- METHOD: GET
+- URL: /get-tv-channel-logos/1340608297342M38110/orig
+- HTTP_METHOD: HTTP/1.1
+- CODE: "200"
+- REF: http://tv.yandex.ru/23/"
+- UA: "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31"
 
 
