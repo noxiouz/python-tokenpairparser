@@ -17,6 +17,7 @@ print p.matches() # return dict like {"FIELD": "DDD", "FIELD2" : "CEEED"}
 
 Write config like (see examples/exaple-config.py):
 ```yaml
+#2013:12:57:45 +0400] my.host.some.net ::ffff:1.1.1.1 "GET /someurl/someurl2/orig HTTP/1.1" 200 "http://tv.yandex.ru/12424/" "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31" "-" 0.000 HIT 1908 "-" "/get-tv-FFFZZFWF/FFFF/orig" "-" -
 - TIME: "2013:12:57:45 +0400"
 - HOST: my.host.some.net
 - IP: ::ffff:1.1.1.1
