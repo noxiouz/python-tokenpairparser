@@ -32,6 +32,9 @@ class Generator(object):
     def get_borders(self, target):
         print "Find %s" % target
         begin = self.example.find(target)
+        if begin == -1:
+            print "Unabel to find %s. Please, verify your config" % target
+            exit(1)
         end = begin + len(target)
         return begin, end
 
@@ -51,14 +54,12 @@ class Generator(object):
         else:
             for i in xrange(begin):
                 self._source.append("p.skip('%s')" % self.example[i])
-            code = "p.upTo('%s', '%s')" %(field, self.example[end])
+            code = "p.upTo('%s', '%s')" %(field, self.example[end].replace('\n',r'\n'))
             self._source.append(code)
-    
 
 if __name__ == "__main__":
     f = open(OUTPUT_FILE, "w")
     G = Generator(s, cfg)
     source = G.generate()
-    print source
     f.write(source)
     f.close()
