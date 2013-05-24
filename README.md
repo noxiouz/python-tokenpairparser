@@ -1,6 +1,4 @@
-Tokenparser
-===============
-
+# Tokenparser
 
 example: Let's parse string like "DDDACEEED"
 
@@ -13,4 +11,44 @@ p.skip('A') #A
 p.fromTo('FIELD2','C','D') #CEEED
 p.parse("DDDACEEED")
 print p.matches() # return dict like {"FIELD": "DDD", "FIELD2" : "CEEED"}
+```
+
+# Generating parser by adaptive_parser.py
+
+Write config like (see examples/exaple-config.py):
+```yaml
+- TIME: "2013:12:57:45 +0400"
+- HOST: my.host.some.net
+- IP: ::ffff:1.1.1.1
+- METHOD: GET
+- URL: /someurl/someurl2/orig
+- HTTP_METHOD: HTTP/1.1
+- CODE: "200"
+- REF: http://tv.yandex.ru/12424/
+- UA: "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31"
+- CACHE: HIT
+- ANOTHER_URI: /get-tv-FFFZZFWF/FFFF/orig
+- SMT: "-"
+- END: "-"
+```
+
+Start script:
+```
+python Tokenparser/adaptive_parser.py examples/example.log my_parser.py examples/example-config.yaml&& python my_parser.py
+```
+And you see:
+```
+'ANOTHER_URI': '/get-tv-FFFZZFWF/FFFF/orig',
+'CACHE': 'HIT',
+'CODE': '200',
+'END': '-',
+'HOST': 'my.host.some.net',
+'HTTP_METHOD': 'HTTP/1.1',
+'IP': '::ffff:1.1.1.1',
+'METHOD': 'GET',
+'REF': 'http://tv.yandex.ru/12424/',
+'SMT': '-',
+'TIME': '2013:12:57:45 +0400',
+'UA': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31',
+'URL': '/someurl/someurl2/orig'}
 ```
