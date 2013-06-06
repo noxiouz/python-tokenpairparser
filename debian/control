@@ -7,7 +7,7 @@ Standards-Version: 3.8.3
 Homepage: https://github.com/noxiouz/python-Tokenpair-parser-on-C-API
 
 Package: python-tokenparser
-Architecture: all
+Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Fast string python parser
  Fast string python parser based on boost::spirit

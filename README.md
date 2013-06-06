@@ -13,7 +13,7 @@ p.parse("DDDACEEED")
 print p.matches() # return dict like {"FIELD": "DDD", "FIELD2" : "CEEED"}
 ```
 
-# Generating parser by adaptive_parser.py
+# Generating parser by parser_creator.py
 
 Write config like (see examples/exaple-config.py):
 ```yaml
@@ -35,7 +35,7 @@ Write config like (see examples/exaple-config.py):
 
 Start script:
 ```
-python Tokenparser/adaptive_parser.py examples/example.log my_parser.py examples/example-config.yaml&& python my_parser.py
+python -m Tokenparser.parser_creator.py examples/example.log my_parser.py examples/example-config.yaml&& python my_parser.py
 ```
 And you see:
 ```

@@ -1,3 +1,9 @@
+python-tokenparser (0.2) lucid; urgency=low
+
+  *  add script for creating parser automaticly
+
+ -- Anton Tyurin <noxiouz@yandex-team.ru>  Thu, 06 Jun 2013 10:03:49 +0400
+
 python-tokenparser (0.1-5) lucid; urgency=low
 
   * Fix properly include of boost::spirit::classic headers.

@@ -1,6 +1,5 @@
 #! /usr/bin/env python
 
-import Tokenparser
 import yaml
 from pprint import pprint
 import sys
