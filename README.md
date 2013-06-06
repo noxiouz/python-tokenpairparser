@@ -38,18 +38,20 @@ Start script:
 python -m Tokenparser.parser_creator.py examples/example.log my_parser.py examples/example-config.yaml&& python my_parser.py
 ```
 And you see:
-```
-'ANOTHER_URI': '/get-tv-FFFZZFWF/FFFF/orig',
-'CACHE': 'HIT',
-'CODE': '200',
-'END': '-',
-'HOST': 'my.host.some.net',
-'HTTP_METHOD': 'HTTP/1.1',
-'IP': '::ffff:1.1.1.1',
-'METHOD': 'GET',
-'REF': 'http://tv.yandex.ru/12424/',
-'SMT': '-',
-'TIME': '2013:12:57:45 +0400',
-'UA': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31',
-'URL': '/someurl/someurl2/orig'}
+```json
+{
+"ANOTHER_URI": "/get-tv-FFFZZFWF/FFFF/orig",
+"CACHE": "HIT",
+"CODE": "200",
+"END": "-",
+"HOST": "my.host.some.net",
+"HTTP_METHOD": "HTTP/1.1",
+"IP": "::ffff:1.1.1.1",
+"METHOD": "GET",
+"REF": "http://tv.yandex.ru/12424/",
+"SMT": "-",
+"TIME": "2013:12:57:45 +0400",
+"UA": "Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31",
+"URL": "/someurl/someurl2/orig"
+}
 ```
