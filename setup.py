@@ -4,8 +4,8 @@ except ImportError:
     from distutils.core import setup, Extension
 
 setup(
-    name = "tokenparser",
-    version = "0.1",
+    name = "Tokenparser",
+    version = "0.2",
     author = "noxiouz",
     license="GPL2",
     description="Fast string parser",
@@ -13,7 +13,7 @@ setup(
     url="https://github.com/noxiouz/python-Tokenpair-parser-on-C-API",
     author_email = "noxiouz@yandex.ru",
     packages=["Tokenparser"],
-    ext_modules = [Extension("_tokenparser",
+    ext_modules = [Extension("Tokenparser/_tokenparser",
                              ["src/tokenparser.cpp","src/module.cpp"],
                              include_dirs = ["include"])]
 )
