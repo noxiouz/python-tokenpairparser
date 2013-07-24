@@ -20,7 +20,6 @@
 #include <Python.h>
 #include <tokenparser.hpp>
 #include <gil.hpp>
-#include <helpers.hpp>
 
 
 using namespace boost::spirit;
