@@ -12,6 +12,7 @@
 # serve to show the default.
 
 import sys, os
+sys.path.insert(0, '..')
 
 class Mock(object):
     def __init__(self, *args, **kwargs):
