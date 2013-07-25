@@ -195,7 +195,7 @@ static PyMethodDef token_parse_methods[] = {
 	{"upTo",	(PyCFunction)token_parser_t::upTo, METH_VARARGS, upTo__doc__},
 	{"parse",	(PyCFunction)token_parser_t::Parse, METH_VARARGS, Parse__doc__},
 	{"multilinesParse",	(PyCFunction)token_parser_t::MultilineParse, METH_VARARGS, "Parse multilines like tuple or list of strings"},
-	{"matches", (PyCFunction)token_parser_t::matches, METH_NOARGS, "Return resukt as dict"},
+	{"matches", (PyCFunction)token_parser_t::matches, METH_NOARGS, "Return result as dict"},
 	{"clearMatches", (PyCFunction)token_parser_t::clearMatches, METH_NOARGS, "Clear result"},
     { NULL, NULL, 0, NULL }
 };
