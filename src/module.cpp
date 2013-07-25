@@ -19,6 +19,7 @@
 
 #include "tokenparser.hpp"
 
+
 extern "C" {
     void init_tokenparser(void) {
         PyObject * module = Py_InitModule3(
@@ -37,6 +38,11 @@ extern "C" {
             module,
             "Tokenparser",
             reinterpret_cast<PyObject*>(&token_parser_type)
+        );
+
+        PyModule_AddIntMacro(
+            module,
+            PACKAGE_VERSION
         );
     }
 }

@@ -165,6 +165,7 @@ token_parser_t::MultilineParse(token_parser_t *self, PyObject *args){
         return NULL;
     }
 
+    clearMatches(self);
     PyObject *list = PyList_New(0);
     PyObject* item;
     while (item = PyIter_Next(iterator)){ // http://docs.python.org/2/c-api/iter.html?highlight=pyiter_next#PyIter_Next

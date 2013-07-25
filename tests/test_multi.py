@@ -1,15 +1,17 @@
-import Tokenparser as p
+import Tokenparser
 
-
-t = p.Tokenparser()
+t = Tokenparser.Tokenparser()
 
 t.upTo('FIELD','1')
 t.skip('1')
 t.skip(' ')
-t.parse('DDD1 ')
-print t.matches()
-t.clearMatches()
-t.parse('ZZZ1 ')
-print t.matches()
-t.clearMatches()
-print t.multilinesParse(['DDD1 ',2,'ZZZ1 '])
+
+if t.parse('DDD1 '):  # True
+	print(t.matches())
+	t.clearMatches()
+
+if t.parse('ZZZ1A'):  # False
+	print(t.matches())
+	t.clearMatches()
+
+print(t.multilinesParse(['DDD1 ',2,'ZZZ1 ']))
