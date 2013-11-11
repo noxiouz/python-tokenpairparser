@@ -2,12 +2,17 @@ Source: python-tokenparser
 Section: misc
 Priority: extra
 Maintainer: Anton Tyurin <noxiouz@yandex-team.ru>
-Build-Depends: cdbs (>= 0.4.49), debhelper (>= 7), python (>= 2.4), python-support, libboost-dev
+Build-Depends: cdbs (>= 0.4.49), 
+ debhelper (>= 7),
+ python (>= 2.6), 
+ python-support, 
+ libboost-dev,
+ python-dev
 Standards-Version: 3.8.3
 Homepage: https://github.com/noxiouz/python-Tokenpair-parser-on-C-API
 
 Package: python-tokenparser
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, python (>= 2.6)
 Description: Fast string python parser
  Fast string python parser based on boost::spirit
