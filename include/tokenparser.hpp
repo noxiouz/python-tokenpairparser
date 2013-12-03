@@ -22,18 +22,25 @@
 #define PARSER_HPP_
 
 #include <Python.h>
+#include <boost/version.hpp>
+
+#if BOOST_VERSION / 100 % 1000 <= 34
+
+#include <boost/spirit/core.hpp>
+#include <boost/spirit/dynamic/stored_rule.hpp>
+#include <boost/spirit/actor/push_back_actor.hpp>
+
+using namespace boost::spirit;
+#else
 
 #include <boost/spirit/include/classic_core.hpp>
 #include <boost/spirit/include/classic_stored_rule.hpp>
 #include <boost/spirit/include/classic_push_back_actor.hpp>
-/*
-#include <boost/spirit/include/classic_core.hpp>
-#include <boost/spirit/include/classic_stored_rule.hpp>
-#include <boost/spirit/include/classic_push_back_actor.hpp>
-*/
-extern PyTypeObject token_parser_type;
 
 using namespace boost::spirit::classic;
+#endif
+
+extern PyTypeObject token_parser_type;
 
 class token_parser_t {
 	public:

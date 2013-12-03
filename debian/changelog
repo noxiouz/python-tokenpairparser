@@ -1,34 +1,40 @@
-python-tokenparser (0.2) lucid; urgency=low
+python-tokenparser (0.2-1) unstable; urgency=low
+
+  * Allow to build with Boost 1.34 (hardy). Remove space_p skiper.
+
+ -- noxiouz <noxiouz@yandex-team.ru>  Tue, 03 Dec 2013 16:28:48 +0400
+
+python-tokenparser (0.2) unstable; urgency=low
 
   *  add script for creating parser automaticly
 
  -- Anton Tyurin <noxiouz@yandex-team.ru>  Thu, 06 Jun 2013 10:03:49 +0400
 
-python-tokenparser (0.1-5) lucid; urgency=low
+python-tokenparser (0.1-5) unstable; urgency=low
 
   * Fix properly include of boost::spirit::classic headers.
 
  -- Anton Tyurin <noxiouz@yandex-team.ru>  Thu, 14 Mar 2013 12:13:53 +0400
 
-python-tokenparser (0.1-4) lucid; urgency=low
+python-tokenparser (0.1-4) unstable; urgency=low
 
   * FIX BUG:  Memory leak
 
  -- Anton Tyurin <noxiouz@yandex-team.ru>  Wed, 20 Feb 2013 23:42:09 +0400
 
-python-tokenparser (0.1-3) lucid; urgency=low
+python-tokenparser (0.1-3) unstable; urgency=low
 
   * add multilinesparser 
 
  -- Anton Tyurin <noxiouz@yandex-team.ru>  Mon, 18 Feb 2013 14:39:16 +0400
 
-python-tokenparser (0.1-2) lucid; urgency=low
+python-tokenparser (0.1-2) unstable; urgency=low
 
   * First stable
 
  -- Anton Tyurin <noxiouz@yandex-team.ru>  Wed, 06 Feb 2013 12:24:30 +0400
 
-python-tokenparser (0.1) lucid; urgency=low
+python-tokenparser (0.1) unstable; urgency=low
 
   * Initial Release.
 

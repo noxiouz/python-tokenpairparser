@@ -39,11 +39,6 @@ extern "C" {
             "Tokenparser",
             reinterpret_cast<PyObject*>(&token_parser_type)
         );
-
-        PyModule_AddIntMacro(
-            module,
-            PACKAGE_VERSION
-        );
     }
 }
 

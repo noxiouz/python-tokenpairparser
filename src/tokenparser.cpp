@@ -121,7 +121,7 @@ token_parser_t::Parse(token_parser_t * self, PyObject * args){
 	if (!PyArg_ParseTuple(args, "s", &input_string)){
 		return NULL;
 	}
-	if (parse( input_string, self->parser_rule, space_p).full ){
+	if (parse(input_string, self->parser_rule).full ){
 		Py_RETURN_TRUE;
 	}
 	else {
@@ -171,7 +171,7 @@ token_parser_t::MultilineParse(token_parser_t *self, PyObject *args){
     while (item = PyIter_Next(iterator)){ // http://docs.python.org/2/c-api/iter.html?highlight=pyiter_next#PyIter_Next
         const char* tm = NULL; 
         tm = PyString_AS_STRING(item);
-	    if (parse(tm, self->parser_rule, space_p).full) {
+	if (parse(tm, self->parser_rule).full) {
             PyObject* value = matches(self);
             PyList_Append(list, value);
             Py_DECREF(value);
