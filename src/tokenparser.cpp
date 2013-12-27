@@ -26,8 +26,10 @@ using namespace boost::spirit;
 
 
 PyObject*
-token_parser_t::construct(PyTypeObject * type, PyObject * args, PyObject * kwargs) {
-	token_parser_t * self = reinterpret_cast<token_parser_t*>(type->tp_alloc(type, 0));
+token_parser_t::construct(PyTypeObject * type, PyObject *args, PyObject * kwargs) {
+    (void) args;
+    (void) kwargs;
+ 	token_parser_t * self = reinterpret_cast<token_parser_t*>(type->tp_alloc(type, 0));
 	self->parser_rule = eps_p;
 	return reinterpret_cast<PyObject*>(self);
 }
@@ -43,7 +45,7 @@ PyDoc_STRVAR(skip__doc__,
 Skip giving symbol");
 
 PyObject*
-token_parser_t::skip(token_parser_t * self, PyObject * args){
+token_parser_t::skip(token_parser_t * self, PyObject * args) {
 	char c;
 	if (!PyArg_ParseTuple(args, "c:skip", &c)){
 		return NULL;
@@ -117,6 +119,7 @@ return ``True``, otherwise - ``False``");
 
 PyObject*
 token_parser_t::Parse(token_parser_t * self, PyObject * args){
+    clearMatches(self);
 	const char * input_string = NULL;
 	if (!PyArg_ParseTuple(args, "s", &input_string)){
 		return NULL;
@@ -168,7 +171,8 @@ token_parser_t::MultilineParse(token_parser_t *self, PyObject *args){
     clearMatches(self);
     PyObject *list = PyList_New(0);
     PyObject* item;
-    while (item = PyIter_Next(iterator)){ // http://docs.python.org/2/c-api/iter.html?highlight=pyiter_next#PyIter_Next
+    // http://docs.python.org/2/c-api/iter.html?highlight=pyiter_next#PyIter_Next
+    while (item = PyIter_Next(iterator)) { 
         const char* tm = NULL; 
         tm = PyString_AS_STRING(item);
 	if (parse(tm, self->parser_rule).full) {

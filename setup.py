@@ -1,7 +1,7 @@
-try:
-    from setuptools import setup, Extension
-except ImportError:
-    from distutils.core import setup, Extension
+# try:
+from setuptools import setup, Extension
+# except ImportError:
+#     from distutils.core import setup, Extension
 
 VERSION = "0.2.1"
 

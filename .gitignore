@@ -2,6 +2,7 @@
 *.pyo
 *.swp
 *.swo
+.tox*
 
 build/*
 dist/*
