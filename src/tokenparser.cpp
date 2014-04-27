@@ -29,13 +29,13 @@ PyObject*
 token_parser_t::construct(PyTypeObject * type, PyObject *args, PyObject * kwargs) {
     (void) args;
     (void) kwargs;
- 	token_parser_t * self = reinterpret_cast<token_parser_t*>(type->tp_alloc(type, 0));
-	self->parser_rule = eps_p;
-	return reinterpret_cast<PyObject*>(self);
+    token_parser_t * self = reinterpret_cast<token_parser_t*>(type->tp_alloc(type, 0));
+    self->parser_rule = eps_p;
+    return reinterpret_cast<PyObject*>(self);
 }
 
 void token_parser_t::destruct(token_parser_t* self) {
-	self->ob_type->tp_free(self);
+    self->ob_type->tp_free(self);
 }
 
 
@@ -46,12 +46,12 @@ Skip giving symbol");
 
 PyObject*
 token_parser_t::skip(token_parser_t * self, PyObject * args) {
-	char c;
-	if (!PyArg_ParseTuple(args, "c:skip", &c)){
-		return NULL;
-	}
-	self->parser_rule = self->parser_rule.copy()>>ch_p(c);
-	Py_RETURN_NONE;
+    char c;
+    if (!PyArg_ParseTuple(args, "c:skip", &c)){
+        return NULL;
+    }
+    self->parser_rule = self->parser_rule.copy()>>ch_p(c);
+    Py_RETURN_NONE;
 }
 
 
@@ -62,12 +62,12 @@ Skip all characters until the occurrence of ``char`` (excludes ``char``)");
 
 PyObject*
 token_parser_t::skipTo(token_parser_t* self, PyObject* args){
-	char c;
-	if (!PyArg_ParseTuple(args, "c:skipTo", &c)){
-		return NULL;
-	}
-	self->parser_rule = self->parser_rule.copy()>>*~ch_p(c);
-	Py_RETURN_NONE;
+    char c;
+    if (!PyArg_ParseTuple(args, "c:skipTo", &c)){
+        return NULL;
+    }
+    self->parser_rule = self->parser_rule.copy()>>*~ch_p(c);
+    Py_RETURN_NONE;
 }
 
 
@@ -79,15 +79,15 @@ Capture all characters until the occurrence of ``char`` (include ``char``)");
 
 PyObject*
 token_parser_t::upTo(token_parser_t * self, PyObject * args){
-	char c;
-	const char * key;
-	if (!PyArg_ParseTuple(args, "sc",&key, &c)){
-		return NULL;
-	}
-	self->_vtr_field.push_back(key);
-	self->parser_rule = self->parser_rule.copy()>>
-			(*~ch_p(c))[push_back_a(self->_vtr_value)];
-	Py_RETURN_NONE;
+    char c;
+    const char * key;
+    if (!PyArg_ParseTuple(args, "sc",&key, &c)){
+        return NULL;
+    }
+    self->_vtr_field.push_back(key);
+    self->parser_rule = self->parser_rule.copy()>>
+            (*~ch_p(c))[push_back_a(self->_vtr_value)];
+    Py_RETURN_NONE;
 }
 
 
@@ -100,15 +100,15 @@ Capture all characters from ``from`` to ``to`` (include ``to``) into ``field``")
 
 PyObject*
 token_parser_t::fromTo(token_parser_t* self, PyObject* args){
-	char _from, _to;
-	const char * key;
-	if (!PyArg_ParseTuple(args, "scc",&key, &_from, &_to)){
-		return NULL;
-	}
-	self->_vtr_field.push_back(key);
-	self->parser_rule = self->parser_rule.copy()>>
-			(ch_p(_from)>>*~ch_p(_to)>>ch_p(_to))[push_back_a(self->_vtr_value)];
-	Py_RETURN_NONE;
+    char _from, _to;
+    const char * key;
+    if (!PyArg_ParseTuple(args, "scc",&key, &_from, &_to)){
+        return NULL;
+    }
+    self->_vtr_field.push_back(key);
+    self->parser_rule = self->parser_rule.copy()>>
+            (ch_p(_from)>>*~ch_p(_to)>>ch_p(_to))[push_back_a(self->_vtr_value)];
+    Py_RETURN_NONE;
 }
 
 PyDoc_STRVAR(Parse__doc__,
@@ -120,44 +120,44 @@ return ``True``, otherwise - ``False``");
 PyObject*
 token_parser_t::Parse(token_parser_t * self, PyObject * args){
     clearMatches(self);
-	const char * input_string = NULL;
-	if (!PyArg_ParseTuple(args, "s", &input_string)){
-		return NULL;
-	}
-	if (parse(input_string, self->parser_rule).full ){
-		Py_RETURN_TRUE;
-	}
-	else {
-		Py_RETURN_FALSE;
-	}
+    const char * input_string = NULL;
+    if (!PyArg_ParseTuple(args, "s", &input_string)){
+        return NULL;
+    }
+    if (parse(input_string, self->parser_rule, space_p).full ){
+        Py_RETURN_TRUE;
+    }
+    else {
+        Py_RETURN_FALSE;
+    }
 }
 
 
 
 PyObject*
 token_parser_t::matches(token_parser_t* self){
-	PyObject * dict = PyDict_New();
-	for (size_t i=0; i < self->_vtr_value.size(); ++i){
+    PyObject * dict = PyDict_New();
+    for (size_t i=0; i < self->_vtr_value.size(); ++i){
         PyObject* value = Py_BuildValue("s", self->_vtr_value[i].c_str());
-		PyDict_SetItemString(dict,
-						self->_vtr_field[i],
-						value
-					);
+        PyDict_SetItemString(dict,
+                        self->_vtr_field[i],
+                        value
+                    );
         Py_DECREF(value);
-	}
-	return dict;
+    }
+    return dict;
 }
 
 
-PyObject* 
+PyObject*
 token_parser_t::clearMatches(token_parser_t* self){
-	self->_vtr_value.clear();
-	self->_vtr_field.clear();
-	Py_RETURN_NONE;
+    self->_vtr_value.clear();
+    self->_vtr_field.clear();
+    Py_RETURN_NONE;
 }
 
 
-PyObject* 
+PyObject*
 token_parser_t::MultilineParse(token_parser_t *self, PyObject *args){
     PyObject* input_lines;
     if (!PyArg_ParseTuple(args, "O", &input_lines)){
@@ -172,10 +172,11 @@ token_parser_t::MultilineParse(token_parser_t *self, PyObject *args){
     PyObject *list = PyList_New(0);
     PyObject* item;
     // http://docs.python.org/2/c-api/iter.html?highlight=pyiter_next#PyIter_Next
-    while (item = PyIter_Next(iterator)) { 
-        const char* tm = NULL; 
+    while (item = PyIter_Next(iterator)) {
+        const char* tm = NULL;
         tm = PyString_AS_STRING(item);
-	if (parse(tm, self->parser_rule).full) {
+
+    if (parse(tm, self->parser_rule, space_p).full) {
             PyObject* value = matches(self);
             PyList_Append(list, value);
             Py_DECREF(value);
@@ -194,14 +195,14 @@ token_parser_t::MultilineParse(token_parser_t *self, PyObject *args){
 //==================================================================================
 
 static PyMethodDef token_parse_methods[] = {
-	{"skip",	(PyCFunction)token_parser_t::skip, METH_VARARGS, skip__doc__},
-	{"skipTo",	(PyCFunction)token_parser_t::skipTo, METH_VARARGS, skipTo__doc__},
-	{"fromTo",	(PyCFunction)token_parser_t::fromTo, METH_VARARGS, fromTo__doc__},
-	{"upTo",	(PyCFunction)token_parser_t::upTo, METH_VARARGS, upTo__doc__},
-	{"parse",	(PyCFunction)token_parser_t::Parse, METH_VARARGS, Parse__doc__},
-	{"multilinesParse",	(PyCFunction)token_parser_t::MultilineParse, METH_VARARGS, "Parse multilines like tuple or list of strings"},
-	{"matches", (PyCFunction)token_parser_t::matches, METH_NOARGS, "Return result as dict"},
-	{"clearMatches", (PyCFunction)token_parser_t::clearMatches, METH_NOARGS, "Clear result"},
+    {"skip",    (PyCFunction)token_parser_t::skip, METH_VARARGS, skip__doc__},
+    {"skipTo",  (PyCFunction)token_parser_t::skipTo, METH_VARARGS, skipTo__doc__},
+    {"fromTo",  (PyCFunction)token_parser_t::fromTo, METH_VARARGS, fromTo__doc__},
+    {"upTo",    (PyCFunction)token_parser_t::upTo, METH_VARARGS, upTo__doc__},
+    {"parse",   (PyCFunction)token_parser_t::Parse, METH_VARARGS, Parse__doc__},
+    {"multilinesParse", (PyCFunction)token_parser_t::MultilineParse, METH_VARARGS, "Parse multilines like tuple or list of strings"},
+    {"matches", (PyCFunction)token_parser_t::matches, METH_NOARGS, "Return result as dict"},
+    {"clearMatches", (PyCFunction)token_parser_t::clearMatches, METH_NOARGS, "Clear result"},
     { NULL, NULL, 0, NULL }
 };
 
