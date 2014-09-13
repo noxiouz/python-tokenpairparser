@@ -1,5 +1,6 @@
-# Tokenparser[![Code Health](https://landscape.io/github/noxiouz/python-Tokenpair-parser-on-C-API/master/landscape.png)](https://landscape.io/github/noxiouz/python-Tokenpair-parser-on-C-API/master)
-
+# Tokenparser
+[![Code Health](https://landscape.io/github/noxiouz/python-Tokenpair-parser-on-C-API/master/landscape.png)](https://landscape.io/github/noxiouz/python-Tokenpair-parser-on-C-API/master)
+[![Status](https://travis-ci.org/noxiouz/python-tokenpairparser)](https://travis-ci.org/noxiouz/python-tokenpairparser)
 example: Let's parse string like "DDDACEEED"
 
 ```python
