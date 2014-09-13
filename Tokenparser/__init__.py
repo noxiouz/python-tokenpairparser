@@ -1,3 +1,23 @@
+#
+# Copyright (c) 2014 Tyurin Anton noxiouz@yandex.ru
+#
+# This file is part of Tokenparser for Python.
+#
+# Tokenparser for Python is free software;
+# you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+#
+# Tokenparser for Python is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+
 import _tokenparser
 
 
@@ -69,7 +89,7 @@ class Tokenparser(_tokenparser.Tokenparser, object):
 
         Parse giving input string. In the case of full compliance
         with the rules return ``True``, otherwise - ``False``
-        
+
         You can retrieve the result with `Tokenparser.matches()`
         '''
         return super(Tokenparser, self).parse(input_string)
