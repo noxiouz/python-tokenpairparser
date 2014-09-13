@@ -2,7 +2,7 @@
 [![Code Health](https://landscape.io/github/noxiouz/python-Tokenpair-parser-on-C-API/master/landscape.png)](https://landscape.io/github/noxiouz/python-Tokenpair-parser-on-C-API/master)
 [![Status](https://travis-ci.org/noxiouz/python-tokenpairparser.svg)](https://travis-ci.org/noxiouz/python-tokenpairparser)
 
-## example:
+## Example
 Let's parse string like "DDDACEEED"
 
 ```python
