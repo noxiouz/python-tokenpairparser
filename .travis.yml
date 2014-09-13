@@ -8,6 +8,7 @@ python:
     # - "3.4"
 
 install:
+    - apt-get install libboost-dev -y
     - pip install -rtests/requirements.txt
     - pip install .
 
